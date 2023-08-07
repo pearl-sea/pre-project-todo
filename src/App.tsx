@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import type { RouteObject } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import Main from "./components/Main";
+import RootLayout from "./pages/Root";
 
-function App() {
+const App = (): JSX.Element => {
+  const routes: RouteObject[] = [
+    {
+      path: "/",
+      element: <RootLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Main />,
+        },
+      ],
+    },
+  ];
+
+  const router = createBrowserRouter(routes);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+      <RouterProvider router={router} />
+    </RecoilRoot>
   );
-}
+};
 
 export default App;
